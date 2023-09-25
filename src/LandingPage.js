@@ -1,83 +1,12 @@
-
-
-import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
-
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {Button, TextField, Card, CardContent, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import ChatInterface from './ChatInterface';
-import Navbar from './NavBar';  // Import the chat interface component
-import TaskPage from './TaskPage';
 
+function LandingPage({ bigGoals, handleShowTasks, isTasksModalOpen, currentGoalTasks, handleCloseTasksModal, setSelectedGoalForChat }) {
+    // ... retain the relevant parts from App.js for the landing page here
 
-    // handleTileHover(event) {
-    //     event.target.style.backgroundColor = "#e0e0e0";  // Light gray when hovered
-    // }
-    
-    // handleTileLeave(event) {
-    //     event.target.style.backgroundColor = "";  // Reset to original color when not hovered
-    // }
-
-
-
-
-
-function MainContent() {
-
-  useEffect(() => {
-    axios.get('http://localhost:5001/goals')
-        .then(response => {
-            setBigGoals(response.data.goals);
-        })
-        .catch(error => {
-            console.error('Error fetching goals:', error);
-        });
-       
-
-  }, []);
-
-  const [bigGoals, setBigGoals] = useState([]);
-  const [goal, setGoal] = useState('');
-  const [goal_desc, setGoalDesc] = useState('');
-  const [goal_comments, setGoalComments] = useState('');
-  const [tasks, setTasks] = useState([]);
-  const [selectedGoalForChat, setSelectedGoalForChat] = useState(null);  // Track the selected goal for chat
-  const [tasksCounts, setTasksCounts] = useState({});
-  const [isTasksModalOpen, setIsTasksModalOpen] = useState(false);
-  const [currentGoalTasks, setCurrentGoalTasks] = useState([]);
-  const [, forceUpdate] = useState(0);
-  
-
-  const handleSubmit = async () => {
-    try {
-        const response = await axios.post('http://localhost:5001/api/goals', { big_goal: goal, goal_desc : goal_desc , goal_comments : goal_comments });
-        console.log(response.data.message);
-    } catch (error) {
-        console.error('Error submitting goal:', error);
-    }
-};
-
-const handleShowTasks = (tasks) => {
-  setCurrentGoalTasks(tasks);
-  setIsTasksModalOpen(true);
-};
-
-const handleCloseTasksModal = (event) => {
-  event.stopPropagation();
-  console.log("Closing Modal");
-  setIsTasksModalOpen(false);
-};
-
-
-  const handleChatEnd = () => {
-    setSelectedGoalForChat(null);  // Reset the selected goal to navigate back to the goals page
-  }
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-    
-      <h1>Goal Planner</h1>
+    return (
+        <>
+                 <h1>Goal Planner</h1>
       {selectedGoalForChat ? (
         <ChatInterface initialGoal={selectedGoalForChat} onChatEnd={handleChatEnd} />
       ) : (
@@ -143,29 +72,8 @@ const handleCloseTasksModal = (event) => {
               </Card>
             ))}
              </div>
-          </div>
         </>
-        
-      )}
-   
-  </div>
-  );
+    );
 }
 
-function App() {
-  // ... rest of your App component logic ...
-
-  return (
-    <BrowserRouter>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <Navbar />
-        <Routes>
-          <Route path="/taskpage" element={<TaskPage />} />
-          <Route path="/" element={<MainContent />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
-}
-
-export default App;
+export default LandingPage;

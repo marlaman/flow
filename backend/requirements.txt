@@ -1,0 +1,19 @@
+# Flask is used for the backend server
+Flask==1.1.2
+
+# Requests is used for making API calls to OpenAI
+requests==2.25.1
+
+# Boto3 is the Amazon Web Services (AWS) SDK for Python
+boto3==1.17.49
+
+# python-dotenv is used to read the .env file where we will store the OpenAI API key
+python-dotenv==0.15.0
+
+# Flask-Cors is used to handle Cross Origin Resource Sharing (CORS), making cross-origin AJAX possible.
+Flask-Cors==3.0.10
+
+# Gunicorn is a WSGI HTTP Server for UNIX, used to serve the Flask application
+gunicorn==20.1.0
+
+pymongo-4.5.0
